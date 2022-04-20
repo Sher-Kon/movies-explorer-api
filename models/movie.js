@@ -1,5 +1,5 @@
 // models/movie.js
-// это файл моделей
+// это файл моделей фильмов
 
 const { isURL } = require('validator');
 const mongoose = require('mongoose');
@@ -95,6 +95,7 @@ const movieSchema = new mongoose.Schema({
     minlength: 2, // минимальная длина — 2 символа
     maxlength: 30, // а максимальная — 30 символов
   },
+
 });
 
 // создаём модель и экспортируем её

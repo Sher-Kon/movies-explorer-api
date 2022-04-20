@@ -1,12 +1,12 @@
 // routes/users.js
-// это файл маршрутов
+// это файл маршрутов пользователя
 
 const { celebrate, Joi } = require('celebrate');
 const routerUsers = require('express').Router(); // создали роутер
 
 const {
-  updateProfileUser,
   getUserAuth,
+  updateProfileUser,
 } = require('../controllers/users');
 
 routerUsers.get('/users/me', getUserAuth);

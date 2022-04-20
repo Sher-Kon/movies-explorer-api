@@ -39,15 +39,13 @@ app.post('/signup', celebrate({
     email: Joi.string().required().email(),
     password: Joi.string().required().min(8),
     name: Joi.string().min(2).max(30),
-    about: Joi.string().min(2).max(30),
-    avatar: Joi.string().pattern(/(https?:\/\/)(w{3}\.)?(((\d{1,3}\.){3}\d{1,3})|((\w-?)+\.(ru|com)))(:\d{2,5})?((\/.+)+)?\/?#?/),
   }),
 }), createUser);
 
-app.use(auth); // авторизация
+app.use(auth); // авторизация токеном
 
-app.use('/', routerUsers); // запускаем
-app.use('/', routerMovies); // запускаем
+app.use('/', routerUsers); // роутер пользователей
+app.use('/', routerMovies); // роутер фильмов
 app.use((req, res, next) => {
   next(new NotFoundError('Маршрут не найден'));
 });
