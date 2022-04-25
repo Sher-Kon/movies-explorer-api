@@ -10,7 +10,7 @@ const UnauthorizedError = require('../errors/unauthorized-err'); // 401
 const NotFoundError = require('../errors/not-found-err'); // 404
 const ConflictError = require('../errors/conflict-err'); // 409
 
-const { NODE_ENV, JWT_SECRET = 'some-secret-key' } = process.env; // eslint-disable-line
+const { JWT_SECRET = 'some-secret-key' } = process.env;
 
 module.exports.login = (req, res, next) => {
   const { email, password } = req.body;

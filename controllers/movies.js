@@ -74,13 +74,12 @@ module.exports.deleteMovie = (req, res, next) => {
         throw new NotFoundError('Фильм с указанным _id не найден');// 404
       }
       if (String(movie.owner) === req.user._id) {
-        Movie.findByIdAndRemove(req.params.id)
+        return Movie.findByIdAndRemove(req.params.id)
           .then(() => { //
             res.send({ message: 'Фильм удален' });
           });
-      } else {
-        throw new ForbiddenError('Нельзя удалять чужой фильм'); // 403
       }
+      throw new ForbiddenError('Нельзя удалять чужой фильм'); // 403
     })
     .catch((err) => {
       if (err.name === 'CastError') {
