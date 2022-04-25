@@ -3,10 +3,10 @@
 
 const { celebrate, Joi } = require('celebrate');
 const routerMovies = require('express').Router(); // создали роутер
-const {
-  getMovies, createMovie, deleteMovie,
-} = require('../controllers/movies');
 const { validate } = require('../models/movie');
+const { getMovies } = require('../controllers/get-movie');
+const { createMovie } = require('../controllers/create-movie');
+const { deleteMovie } = require('../controllers/delete-movie');
 
 routerMovies.get('/movies', getMovies);
 

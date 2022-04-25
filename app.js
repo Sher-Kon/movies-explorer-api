@@ -5,11 +5,10 @@ const express = require('express');
 const cors = require('cors'); // var
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const { celebrate, Joi } = require('celebrate');
 const { errors } = require('celebrate');
+const routerSign = require('./routes/sign'); // импортируем роутер
 const routerMovies = require('./routes/movies'); // импортируем роутер
 const routerUsers = require('./routes/users'); // импортируем роутер
-const { createUser, login } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const NotFoundError = require('./errors/not-found-err'); // 404
 const { requestLogger, errorLogger } = require('./middlewares/logger');
@@ -27,20 +26,7 @@ app.use(requestLogger); // подключаем логгер запросов д
 
 app.use(cors());
 
-app.post('/signin', celebrate({
-  body: Joi.object().keys({
-    email: Joi.string().required().email(),
-    password: Joi.string().required().min(8),
-  }),
-}), login);
-
-app.post('/signup', celebrate({
-  body: Joi.object().keys({
-    email: Joi.string().required().email(),
-    password: Joi.string().required().min(8),
-    name: Joi.string().min(2).max(30),
-  }),
-}), createUser);
+app.use('/', routerSign); // роутер регистрации
 
 app.use(auth); // авторизация токеном
 

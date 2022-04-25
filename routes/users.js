@@ -4,10 +4,8 @@
 const { celebrate, Joi } = require('celebrate');
 const routerUsers = require('express').Router(); // создали роутер
 
-const {
-  getUserAuth,
-  updateProfileUser,
-} = require('../controllers/users');
+const { getUserAuth } = require('../controllers/get-user-auth');
+const { updateProfileUser } = require('../controllers/update-profile-user');
 
 routerUsers.get('/users/me', getUserAuth);
 

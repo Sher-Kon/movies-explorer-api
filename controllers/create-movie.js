@@ -1,17 +1,9 @@
-// controllers/movies.js
+// controllers/create-movie.js
 // это файл контроллеров фильмов
-// getMovies, createMovie, deleteMovie
+// createMovie
 
 const Movie = require('../models/movie');
-const NotFoundError = require('../errors/not-found-err'); // 404
-const ForbiddenError = require('../errors/forbidden-err'); // 403
 const BadRequestError = require('../errors/bad-request-err'); // 400
-
-module.exports.getMovies = (req, res, next) => {
-  Movie.find({}) // запрос всех
-    .then((movies) => res.send({ movies }))//
-    .catch(next);
-};
 
 // создаёт фильм с переданными в теле
 // country, director, duration, year, description, image,
@@ -63,27 +55,6 @@ module.exports.createMovie = (req, res, next) => {
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new BadRequestError('Переданы некорректные данные при создании фильма')); // 400
-      } else { next(err); }
-    });
-};
-
-module.exports.deleteMovie = (req, res, next) => {
-  Movie.findById(req.params.id)
-    .then((movie) => { //
-      if (!movie) {
-        throw new NotFoundError('Фильм с указанным _id не найден');// 404
-      }
-      if (String(movie.owner) === req.user._id) {
-        return Movie.findByIdAndRemove(req.params.id)
-          .then(() => { //
-            res.send({ message: 'Фильм удален' });
-          });
-      }
-      throw new ForbiddenError('Нельзя удалять чужой фильм'); // 403
-    })
-    .catch((err) => {
-      if (err.name === 'CastError') {
-        next(new BadRequestError('Невалидный id')); // 400
       } else { next(err); }
     });
 };
